@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Riwayat Pembelian</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+  <h1 class="mb-4">Riwayat Pembelian</h1>
+
+  <% if (pembelian.length === 0) { %>
+    <div class="alert alert-warning">Belum ada riwayat pembelian.</div>
+  <% } else { %>
+    <table class="table table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>Produk</th>
+          <th>Jumlah</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Tanggal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% pembelian.forEach(item => { %>
+          <tr>
+            <td><%= item.nama %></td>
+            <td><%= item.jumlah %></td>
+            <td>Rp <%= item.total.toLocaleString() %></td>
+            <td><%= item.status %></td>
+            <td><%= new Date(item.tanggal).toLocaleString() %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <a href="/user/view/produk" class="btn btn-secondary mt-3">Kembali ke Produk</a>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

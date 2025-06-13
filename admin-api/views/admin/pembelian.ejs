@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Daftar Pembelian</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Daftar Pembelian</h2>
+    <a href="/auth/logout" class="btn btn-outline-danger">Logout</a>
+  </div>
+
+  <% if (pembelian.length === 0) { %>
+    <div class="alert alert-warning mt-4">Belum ada pembelian.</div>
+  <% } else { %>
+    <table class="table table-bordered table-striped mt-4">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Produk</th>
+          <th>Jumlah</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Tanggal</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% pembelian.forEach(p => { %>
+          <tr>
+            <td><%= p.id %></td>
+            <td><%= p.username %></td>
+            <td><%= p.produk %></td>
+            <td><%= p.jumlah %></td>
+            <td>Rp <%= p.total.toLocaleString() %></td>
+            <td><%= p.status %></td>
+            <td><%= new Date(p.tanggal).toLocaleString() %></td>
+            <td>
+              <% if (p.status !== 'dibatalkan') { %>
+                <form method="POST" action="/admin/pembelian/<%= p.id %>/cancel" onsubmit="return confirm('Yakin ingin membatalkan?');">
+                  <button type="submit" class="btn btn-sm btn-danger">Batalkan</button>
+                </form>
+              <% } else { %>
+                <span class="text-muted">Dibatalkan</span>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <a href="/" class="btn btn-secondary mt-4">Kembali ke Beranda</a>
+</body>
+</html>
